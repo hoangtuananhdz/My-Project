@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lemon Language Learning - Quiz</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background-color: #fffaf0;
+      color: #333;
+    }
+
+    /* Header */
+    .header {
+      width: 100%;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 80px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+    }
+
+    .logo img {
+      height: 45px;
+    }
+
+    .navbar a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #444;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .navbar a:hover {
+      color: #f4b400;
+    }
+
+    .navbar a.active {
+      color: #f4b400;
+      font-weight: 600;
+    }
+
+    .auth-btns .sign,
+    .auth-btns .register {
+      border: 1px solid #ccc;
+      background: #fff;
+      padding: 6px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .auth-btns .register {
+      background-color: #f4b400;
+      border: none;
+      color: white;
+      margin-left: 8px;
+    }
+
+    /* Quiz Section */
+    .quiz-section {
+      background-color: #fff5db;
+      padding: 60px 0;
+      text-align: center;
+    }
+
+    .quiz-container h1 {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .quiz-container p {
+      margin-top: 8px;
+      color: #555;
+    }
+
+    .levels {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 40px 0;
+      flex-wrap: wrap;
+    }
+
+    .level-card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 25px;
+      width: 180px;
+      transition: transform 0.3s;
+    }
+
+    .level-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .level-icon {
+      width: 50px;
+      height: 70px;
+      border-radius: 6px;
+      margin: 0 auto 10px;
+    }
+
+    .beginner { background-color: #6fcf97; }
+    .intermediate { background-color: #56ccf2; }
+    .advanced { background-color: #eb5757; }
+
+    .start-btn {
+      background: #f4b400;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      margin-top: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .start-btn:hover {
+      background-color: #e0a800;
+    }
+
+    .quiz-box {
+      background: #fff;
+      width: 400px;
+      margin: 30px auto;
+      border-radius: 15px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      padding: 25px;
+    }
+
+    .question-number {
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    .question {
+      font-size: 1.1rem;
+      margin: 10px 0 20px;
+    }
+
+    .options button {
+      display: block;
+      width: 100%;
+      border: 1px solid #ccc;
+      background: #fff;
+      border-radius: 8px;
+      padding: 8px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .options button:hover {
+      background-color: #fff7d6;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    .controls button {
+      background: #f4b400;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .controls button:hover {
+      background: #e0a800;
+    }
+
+    /* Score Box */
+    .score-box {
+      margin-top: 30px;
+      font-size: 1rem;
+      background: #fff;
+      display: inline-block;
+      padding: 15px 25px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .score-box a {
+      display: block;
+      color: #6fcf97;
+      margin-top: 8px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .score-box a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #fff;
+      padding: 30px 80px;
+      text-align: center;
+      border-top: 1px solid #eee;
+      margin-top: 40px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo img {
+      height: 50px;
+    }
+
+    .footer-social a {
+      margin: 0 5px;
+      font-size: 1.4rem;
+      text-decoration: none;
+    }
+
+    .copyright {
+      margin-top: 15px;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .levels {
+        flex-direction: column;
+        align-items: center;
+      }
+      .quiz-box {
+        width: 90%;
+      }
+      .header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <img src="logo.png" alt="Lemon Logo" />
+      <span>Lemon Online Language Learning</span>
+    </div>
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <a href="vocabulary.html">Vocabulary</a>
+      <a href="flashcard.html">Flashcard</a>
+      <a href="quiz.html" class="active">Quiz</a>
+      <a href="wordofday.html">Word of the day</a>
+      <a href="about.html">About us</a>
+    </nav>
+    <div class="auth-btns">
+      <button class="sign">Sign in</button>
+      <button class="register">Register</button>
+    </div>
+  </header>
+
+  <!-- Quiz Section -->
+  <section class="quiz-section">
+    <div class="quiz-container">
+      <h1>Test Your Vocabulary Skills 🧠</h1>
+      <p>Choose your level to start practice learning vocabulary!</p>
+
+      <div class="levels">
+        <div class="level-card">
+          <div class="level-icon beginner"></div>
+          <h3>Beginner</h3>
+          <button class="start-btn">Start Quiz</button>
+        </div>
+        <div class="level-card">
+          <div class="level-icon intermediate"></div>
+          <h3>Intermediate</h3>
+          <button class="start-btn">Start Quiz</button>
+        </div>
+        <div class="level-card">
+          <div class="level-icon advanced"></div>
+          <h3>Advanced</h3>
+          <button class="start-btn">Start Quiz</button>
+        </div>
+      </div>
+
+      <div class="quiz-box">
+        <p class="question-number">Question 2 of 10</p>
+        <h3 class="question">What does ‘Ubiquitous’ mean?</h3>
+        <div class="options">
+          <button>Everywhere</button>
+          <button>Unique</button>
+          <button>Same</button>
+          <button>Rare</button>
+        </div>
+        <div class="controls">
+          <button class="prev">Previous</button>
+          <button class="next">Next</button>
+        </div>
+      </div>
+
+      <div class="score-box">
+        <p>You Scored: <strong>8/10</strong></p>
+        <a href="#">Xem lại từ vựng sai ở phần ôn luyện 🌱</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="logo.png" alt="Lemon Logo" />
+        <p>Lemon Online Language Learning</p>
+      </div>
+      <div class="footer-info">
+        <p><strong>Email:</strong> lemonlearning@gmail.com</p>
+        <p><strong>Address:</strong> 222 Giải Phóng, Hai Bà Trưng, Hà Nội</p>
+      </div>
+      <div class="footer-social">
+        <a href="#">📘</a>
+        <a href="#">📷</a>
+        <a href="#">🐦</a>
+        <a href="#">▶️</a>
+      </div>
+    </div>
+    <p class="copyright">© 2025 Lemon Online Language Learning. All rights reserved.</p>
+  </footer>
+</body>
+</html>
